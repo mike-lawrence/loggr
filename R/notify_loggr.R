@@ -14,15 +14,15 @@ notify_loggr <- function(..., type = "other", muffled = FALSE)
   if (inherits(args[[1L]], "condition")) {
     cond <- args[[1L]]
   } else {
-    args = paste0(unlist(args),collapse='')
+    message = paste0(unlist(args),collapse='')
     if (type == "error") {
       # Can we get the call here?
-      cond <- simpleError(.makeMessage(args, domain = args[["domain"]]))
+      cond <- simpleError(.makeMessage(message, domain = args[["domain"]]))
     } else if (type == "warning") {
       # Can we get the call here?
-      cond <- simpleWarning(.makeMessage(args, domain = args[["domain"]]))
+      cond <- simpleWarning(.makeMessage(message, domain = args[["domain"]]))
     } else {
-      cond <- simpleCondition(.makeMessage(args, domain = args[["domain"]]))
+      cond <- simpleCondition(.makeMessage(message, domain = args[["domain"]]))
     }
   }
   le <- as_log_event(cond)
