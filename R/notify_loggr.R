@@ -13,14 +13,17 @@ notify_loggr <- function(..., type = "other", muffled = FALSE)
   args <- list(...)
   if (inherits(args[[1L]], "condition")) {
     cond <- args[[1L]]
-  } else if (type == "error") {
-      # Can we get the call here?
-      cond <- simpleError(.makeMessage(args[[1L]], domain = args[["domain"]]))
-  } else if (type == "warning") {
-      # Can we get the call here?
-      cond <- simpleWarning(.makeMessage(args[[1L]], domain = args[["domain"]]))
   } else {
-      cond <- simpleCondition(.makeMessage(args[[1L]], domain = args[["domain"]]))
+    args = paste0(unlist(args),collapse='')
+    if (type == "error") {
+      # Can we get the call here?
+      cond <- simpleError(.makeMessage(args, domain = args[["domain"]]))
+    } else if (type == "warning") {
+      # Can we get the call here?
+      cond <- simpleWarning(.makeMessage(args, domain = args[["domain"]]))
+    } else {
+      cond <- simpleCondition(.makeMessage(args, domain = args[["domain"]]))
+    }
   }
   le <- as_log_event(cond)
 
