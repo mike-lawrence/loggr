@@ -14,7 +14,8 @@ notify_loggr <- function(..., type = "other", muffled = FALSE)
   if (inherits(args[[1L]], "condition")) {
     cond <- args[[1L]]
   } else {
-    message = paste0(unlist(args),collapse='')
+    message = unlist(args)
+    message = paste0(message[1:(length(message)-3)],collapse='')
     if (type == "error") {
       # Can we get the call here?
       cond <- simpleError(.makeMessage(message, domain = args[["domain"]]))
